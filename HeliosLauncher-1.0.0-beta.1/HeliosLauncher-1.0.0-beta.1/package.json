@@ -1,0 +1,109 @@
+{
+  "name": "westeroscraftlauncher",
+  "version": "1.0.0-beta.1",
+  "description": "Custom modded launcher for Westeroscraft",
+  "productName": "WesterosCraft Launcher",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron index.js",
+    "travislinux": "electron-builder --linux --win",
+    "travisdarwin": "electron-builder --mac",
+    "dist": "SET ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true & electron-builder",
+    "dist:win": "npm run dist -- --win --x64",
+    "dist:mac": "npm run dist -- --mac",
+    "dist:linux": "npm run dist -- --linux --x64",
+    "dist:deb": "npm run dist -- --linux deb --x64",
+    "dist:all": "npm run dist -- -wl --x64",
+    "lint": "eslint --config .eslintrc.json --ignore-pattern app/assets/js/scripts/*.js . && eslint --config .eslintrc.scripts.json app/assets/js/scripts"
+  },
+  "engines": {
+    "node": "10.8.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WesterosCraftCode/ElectronLauncher.git"
+  },
+  "author": "Daniel Scalzi (https://github.com/dscalzi/)",
+  "license": "UNLICENSED",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/WesterosCraftCode/ElectronLauncher/issues"
+  },
+  "homepage": "http://www.westeroscraft.com/",
+  "dependencies": {
+    "adm-zip": "^0.4.11",
+    "async": "^2.6.1",
+    "discord-rpc": "^3.0.0",
+    "ejs": "^2.6.1",
+    "ejs-electron": "^2.0.3",
+    "electron-is-dev": "^0.3.0",
+    "electron-updater": "^3.1.1",
+    "github-syntax-dark": "^0.5.0",
+    "jquery": "^3.3.1",
+    "mkdirp": "^0.5.1",
+    "request": "^2.87.0",
+    "rimraf": "^2.6.2",
+    "semver": "^5.5.0",
+    "tar-fs": "^1.16.3",
+    "uuid": "^3.3.2",
+    "winreg": "^1.2.4"
+  },
+  "devDependencies": {
+    "electron": "^2.0.7",
+    "electron-builder": "^20.27.1",
+    "eslint": "^5.3.0"
+  },
+  "build": {
+    "appId": "westeroscraftlauncher",
+    "productName": "WesterosCraft Launcher",
+    "artifactName": "${productName}.${ext}",
+    "copyright": "Copyright © 2018 WesterosCraft",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": "x64"
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.games",
+      "icon": "build/icon.icns",
+      "type": "distribution"
+    },
+    "linux": {
+      "target": "AppImage",
+      "maintainer": "Daniel Scalzi",
+      "vendor": "WesterosCraft",
+      "synopsis": "Custom modded launcher for WesterosCraft",
+      "description": "Custom launcher which allows users to join WesterosCraft. All mods, configurations, and updates are handled automatically.",
+      "category": "Game"
+    },
+    "deb": {
+      "compression": "xz",
+      "packageCategory": "Games",
+      "priority": "optional"
+    },
+    "compression": "maximum",
+    "files": [
+      "!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.travis.yml,.nvmrc,.eslintrc.scripts.json,.eslintrc.json}"
+    ],
+    "extraResources": [
+      "libraries"
+    ],
+    "asar": true
+  }
+}
